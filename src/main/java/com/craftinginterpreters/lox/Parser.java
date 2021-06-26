@@ -17,10 +17,18 @@ class Parser {
         this.tokens = tokens;
     }
 
+    /**
+     * expression → assignment ;
+     * @return
+     */
     private Expr expression() {
         return assignment();
     }
 
+    /**
+     * assignment → IDENTIFIER "=" assignment | equality ;
+     * @return
+     */
     private Expr assignment() {
         Expr expr = or();
 
@@ -59,6 +67,10 @@ class Parser {
         return expr;
     }
 
+    /**
+     * equality → comparison ( ( "!=" | "==" ) comparison )* ;
+     * @return
+     */
     private Expr equality() {
         Expr expr = comparison();
 
@@ -104,6 +116,10 @@ class Parser {
         return tokens.get(current - 1);
     }
 
+    /**
+     * comparison → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+     * @return
+     */
     private Expr comparison() {
         Expr expr = term();
         while(match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL)) {
@@ -115,6 +131,10 @@ class Parser {
         return expr;
     }
 
+    /**
+     * term → factor ( ( "-" | "+" ) factor )* ;
+     * @return
+     */
     private Expr term() {
         Expr expr = factor();
         while(match(MINUS, PLUS)) {
@@ -126,6 +146,10 @@ class Parser {
         return expr;
     }
 
+    /**
+     * factor → unary ( ( "/" | "*" ) unary )* ;
+     * @return
+     */
     private Expr factor() {
         Expr expr = unary();
         while(match(SLASH, STAR)) {
@@ -137,6 +161,10 @@ class Parser {
         return expr;
     }
 
+    /**
+     * unary → ( "!" | "-" ) unary | primary ;
+     * @return
+     */
     private Expr unary() {
         if(match(BANG, MINUS)) {
             Token operator = previous();
@@ -146,6 +174,10 @@ class Parser {
         return primary();
     }
 
+    /**
+     * primary → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" ;
+     * @return
+     */
     private Expr primary() {
         if(match(FALSE)) return new Expr.Literal(false);
         if(match(TRUE)) return new Expr.Literal(true);
@@ -210,6 +242,10 @@ class Parser {
         return statements;
     }
 
+    /**
+     * declaration → varDecl | statement ;
+     * @return
+     */
     private Stmt declaration() {
         try {
             if(match(VAR)) return varDeclaration();
@@ -220,6 +256,10 @@ class Parser {
         }
     }
 
+    /**
+     * varDecl → "var" IDENTIFIER ( "=" expression )? ";" ;
+     * @return
+     */
     private Stmt varDeclaration() {
         Token name = consume(IDENTIFIER, "Expect variable name.");
         Expr initializer = null;
@@ -230,6 +270,10 @@ class Parser {
         return new Stmt.Var(name, initializer);
     }
 
+    /**
+     * statement → exprStmt | printStmt | block | ifStmt | whileStmt | forStmt;
+     * @return
+     */
     private Stmt statement() {
         if (match(FOR)) return forStatement();
         if (match(IF)) return ifStatement();
@@ -240,6 +284,10 @@ class Parser {
         return expressionStatement();
     }
 
+    /**
+     * forStmt → "for" "(" ( varDecl | exprStmt | ";" ) expression? ";" expression? ")" statement ;
+     * @return
+     */
     private Stmt forStatement() {
         consume(LEFT_PAREN, "Expected '(' after 'for'.");
 
@@ -278,6 +326,10 @@ class Parser {
         return body;
     }
 
+    /**
+     * whileStmt → "while" "(" expression ")" statement ;
+     * @return
+     */
     private Stmt whileStatement() {
         consume(LEFT_PAREN, "Expected '(' after 'while'.");
         Expr condition = expression();
@@ -286,6 +338,10 @@ class Parser {
         return new Stmt.While(condition, body);
     }
 
+    /**
+     * ifStmt → "if" "(" expression ")" statement ( "else" statement )? ;
+     * @return
+     */
     private Stmt ifStatement() {
         consume(LEFT_PAREN, "Expect '(' after 'if'.");
         Expr condition = expression();
@@ -299,6 +355,10 @@ class Parser {
         return new Stmt.If(condition, thenBranch, elseBranch);
     }
 
+    /**
+     * block → "{" declaration* "}" ;
+     * @return
+     */
     private List<Stmt> block() {
         List<Stmt> statements = new ArrayList<>();
         while(!check(RIGHT_BRACE) && !isAtEnd()) {
@@ -308,12 +368,20 @@ class Parser {
         return statements;
     }
 
+    /**
+     * printStmt → "print" expression ";" ;
+     * @return
+     */
     private Stmt printStatement() {
         Expr value = expression();
         consume(SEMICOLON, "Expect ';' after value.");
         return new Stmt.Print(value);
     }
 
+    /**
+     * exprStmt → expression ";" ;
+     * @return
+     */
     private Stmt expressionStatement() {
         Expr expr = expression();
         consume(SEMICOLON, "Expect ';' after expression.");
