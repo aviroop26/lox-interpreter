@@ -22,7 +22,7 @@ NULL - nil
 ---
 #### 2. Variable declaration:
 - `var x = 2;`
-- `var s = "happy"`
+- `var s = "happy";`
 
 #### 3. Branching Control Flow
 ###### IF condition:
@@ -31,7 +31,7 @@ if (x == 2) {
     print "x equals 2";
 }
 else if (x == 3) {
-    print "x equals 3"
+    print "x equals 3";
 }
 else {
     print "x is neither 2 nor 3";
