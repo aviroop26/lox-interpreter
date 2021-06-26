@@ -2,6 +2,7 @@ package com.craftinginterpreters.tool;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class GenerateAst {
 //            System.err.println("Usage: generate_ast <output directory>");
 //            System.exit(64);
 //        }
-        String outputDir = "/home/aviroop123/IdeaProjects/MyMavenProject2/src/main/java/com/craftinginterpreters/lox";
+        String outputDir = Paths.get("").toAbsolutePath().toString() + "/src/main/java/com/craftinginterpreters/lox/generated";
         defineAst(outputDir, "Expr", Arrays.asList(
                 "Assign   : Token name, Expr value",
                 "Binary   : Expr left, Token operator, Expr right",
@@ -36,11 +37,12 @@ public class GenerateAst {
         String path = outputDir + "/" + baseName + ".java";
         PrintWriter writer = new PrintWriter(path, "UTF-8");
 
-        writer.println("package com.craftinginterpreters.lox;");
+        writer.println("package com.craftinginterpreters.lox.generated;");
         writer.println();
         writer.println("import java.util.List;");
+        writer.println("import com.craftinginterpreters.lox.entities.Token;");
         writer.println();
-        writer.println("abstract class " + baseName + " {");
+        writer.println("public abstract class " + baseName + " {");
         defineVisitor(writer, baseName, types);
         for (String type : types) {
             String className = type.split(":")[0].trim();
@@ -49,18 +51,18 @@ public class GenerateAst {
         }
         // The base accept() method.
         writer.println();
-        writer.println("  abstract <R> R accept(Visitor<R> visitor);");
+        writer.println("  public abstract <R> R accept(Visitor<R> visitor);");
         writer.println("}");
         writer.close();
     }
     private static void defineType(
             PrintWriter writer, String baseName,
             String className, String fieldList) {
-        writer.println("  static class " + className + " extends " +
+        writer.println("  public static class " + className + " extends " +
                 baseName + " {");
 
         // Constructor.
-        writer.println("    " + className + "(" + fieldList + ") {");
+        writer.println("    public " + className + "(" + fieldList + ") {");
 
         // Store parameters in fields.
         String[] fields = fieldList.split(", ");
@@ -74,7 +76,7 @@ public class GenerateAst {
         // Visitor pattern.
         writer.println();
         writer.println("    @Override");
-        writer.println("    <R> R accept(Visitor<R> visitor) {");
+        writer.println("    public <R> R accept(Visitor<R> visitor) {");
         writer.println("      return visitor.visit" +
                 className + baseName + "(this);");
         writer.println("    }");
@@ -82,14 +84,14 @@ public class GenerateAst {
         // Fields.
         writer.println();
         for (String field : fields) {
-            writer.println("    final " + field + ";");
+            writer.println("    public final " + field + ";");
         }
 
         writer.println("  }");
     }
     private static void defineVisitor(
             PrintWriter writer, String baseName, List<String> types) {
-        writer.println("  interface Visitor<R> {");
+        writer.println("  public interface Visitor<R> {");
 
         for (String type : types) {
             String typeName = type.split(":")[0].trim();

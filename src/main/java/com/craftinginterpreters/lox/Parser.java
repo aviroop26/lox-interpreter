@@ -2,6 +2,8 @@ package com.craftinginterpreters.lox;
 
 import com.craftinginterpreters.lox.entities.Token;
 import com.craftinginterpreters.lox.enums.TokenType;
+import com.craftinginterpreters.lox.generated.Expr;
+import com.craftinginterpreters.lox.generated.Stmt;
 
 import java.util.ArrayList;
 import java.util.Arrays;

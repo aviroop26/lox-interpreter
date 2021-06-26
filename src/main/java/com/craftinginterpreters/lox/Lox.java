@@ -3,6 +3,7 @@ package com.craftinginterpreters.lox;
 import com.craftinginterpreters.lox.entities.Token;
 import com.craftinginterpreters.lox.enums.TokenType;
 import com.craftinginterpreters.lox.exceptions.RuntimeError;
+import com.craftinginterpreters.lox.generated.Stmt;
 import com.craftinginterpreters.lox.scanner.Scanner;
 import com.craftinginterpreters.lox.scanner.ScannerImpl;
 

@@ -4,6 +4,8 @@ import com.craftinginterpreters.lox.entities.Environment;
 import com.craftinginterpreters.lox.entities.Token;
 import com.craftinginterpreters.lox.enums.TokenType;
 import com.craftinginterpreters.lox.exceptions.RuntimeError;
+import com.craftinginterpreters.lox.generated.Expr;
+import com.craftinginterpreters.lox.generated.Stmt;
 
 import java.util.List;
 
