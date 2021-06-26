@@ -7,6 +7,9 @@ import java.util.Map;
 
 import static com.craftinginterpreters.lox.TokenType.*;
 
+/**
+ * Scanner tokenizes the input script and converts the script into a series of tokens.
+ */
 class Scanner {
     private final String source;
     private final List<Token> tokens = new ArrayList<>();
@@ -53,6 +56,10 @@ class Scanner {
         return tokens;
     }
 
+    /**
+     * Returns the current character and advances the current pointer.
+     * @return
+     */
     private char advance() {
         return source.charAt(current++);
     }
@@ -66,6 +73,11 @@ class Scanner {
         tokens.add(new Token(type, text, literal, line));
     }
 
+    /**
+     * If current character matches expected, the current pointer advances and return true. Else returns false.
+     * @param expected
+     * @return
+     */
     private boolean match(char expected) {
         if(isAtEnd()) return false;
         if(source.charAt(current) != expected) return false;
@@ -73,11 +85,19 @@ class Scanner {
         return true;
     }
 
+    /**
+     * Returns current character.
+     * @return
+     */
     private char peek() {
         if(isAtEnd()) return '\0';
         return source.charAt(current);
     }
 
+    /**
+     * Returns next character.
+     * @return
+     */
     private char peekNext() {
         if(current + 1 >= source.length()) return '\0';
         return source.charAt(current + 1);
