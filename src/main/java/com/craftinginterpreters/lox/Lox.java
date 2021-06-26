@@ -40,6 +40,11 @@ public class Lox {
             hadError = false;
         }
     }
+
+    /**
+     * Takes the input from interactive/file mode, scans, parses and interprets the input.
+     * @param source - The entire line(interactive input) or script(file input)  as a string
+     */
     private static void run(String source) {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
@@ -52,10 +57,21 @@ public class Lox {
 
         interpreter.interpret(statements);
     }
+
+    /**
+     * Prints error at given line with a message.
+     * @param line
+     * @param message
+     */
     static void error(int line, String message) {
         report(line, "", message);
     }
 
+    /**
+     * Prints error at a given token with a line number, token lexeme and message.
+     * @param token
+     * @param message
+     */
     static void error(Token token, String message) {
         if (token.type == TokenType.EOF) {
             report(token.line, " at end", message);
@@ -71,6 +87,10 @@ public class Lox {
         hadError = true;
     }
 
+    /**
+     * Throws error if error is detected when interpreting the script.
+     * @param error
+     */
     static void runtimeError(RuntimeError error) {
         System.err.println(error.getMessage() +
                 "\n[line " + error.token.line + "]");
