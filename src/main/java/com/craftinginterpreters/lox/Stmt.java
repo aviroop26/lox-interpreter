@@ -1,5 +1,7 @@
 package com.craftinginterpreters.lox;
 
+import com.craftinginterpreters.lox.entities.Token;
+
 import java.util.List;
 
 abstract class Stmt {

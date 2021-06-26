@@ -1,10 +1,13 @@
 package com.craftinginterpreters.lox;
 
+import com.craftinginterpreters.lox.entities.Token;
+import com.craftinginterpreters.lox.enums.TokenType;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.craftinginterpreters.lox.TokenType.*;
+import static com.craftinginterpreters.lox.enums.TokenType.*;
 
 class Parser {
 

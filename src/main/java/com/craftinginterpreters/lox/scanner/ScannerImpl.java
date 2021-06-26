@@ -1,16 +1,20 @@
-package com.craftinginterpreters.lox;
+package com.craftinginterpreters.lox.scanner;
+
+import com.craftinginterpreters.lox.Lox;
+import com.craftinginterpreters.lox.entities.Token;
+import com.craftinginterpreters.lox.enums.TokenType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.craftinginterpreters.lox.TokenType.*;
+import static com.craftinginterpreters.lox.enums.TokenType.*;
 
 /**
  * Scanner tokenizes the input script and converts the script into a series of tokens.
  */
-class Scanner {
+public class ScannerImpl implements Scanner {
     private final String source;
     private final List<Token> tokens = new ArrayList<>();
     private static final Map<String, TokenType> keywords;
@@ -38,7 +42,7 @@ class Scanner {
         keywords.put("while",  WHILE);
     }
 
-    Scanner(String source) {
+    public ScannerImpl(String source) {
         this.source = source;
     }
 
@@ -46,7 +50,7 @@ class Scanner {
         return current >= source.length();
     }
 
-    List<Token> scanTokens() {
+    public List<Token> scanTokens() {
         while(!isAtEnd()) {
             start = current;
             scanToken();

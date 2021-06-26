@@ -1,5 +1,10 @@
 package com.craftinginterpreters.lox;
 
+import com.craftinginterpreters.lox.entities.Environment;
+import com.craftinginterpreters.lox.entities.Token;
+import com.craftinginterpreters.lox.enums.TokenType;
+import com.craftinginterpreters.lox.exceptions.RuntimeError;
+
 import java.util.List;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {

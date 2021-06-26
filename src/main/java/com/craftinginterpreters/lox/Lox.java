@@ -1,5 +1,11 @@
 package com.craftinginterpreters.lox;
 
+import com.craftinginterpreters.lox.entities.Token;
+import com.craftinginterpreters.lox.enums.TokenType;
+import com.craftinginterpreters.lox.exceptions.RuntimeError;
+import com.craftinginterpreters.lox.scanner.Scanner;
+import com.craftinginterpreters.lox.scanner.ScannerImpl;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -46,7 +52,7 @@ public class Lox {
      * @param source - The entire line(interactive input) or script(file input)  as a string
      */
     private static void run(String source) {
-        Scanner scanner = new Scanner(source);
+        Scanner scanner = new ScannerImpl(source);
         List<Token> tokens = scanner.scanTokens();
 
         Parser parser = new Parser(tokens);
@@ -63,7 +69,7 @@ public class Lox {
      * @param line
      * @param message
      */
-    static void error(int line, String message) {
+    public static void error(int line, String message) {
         report(line, "", message);
     }
 
