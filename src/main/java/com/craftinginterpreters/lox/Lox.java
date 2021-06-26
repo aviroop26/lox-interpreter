@@ -4,6 +4,8 @@ import com.craftinginterpreters.lox.entities.Token;
 import com.craftinginterpreters.lox.enums.TokenType;
 import com.craftinginterpreters.lox.exceptions.RuntimeError;
 import com.craftinginterpreters.lox.generated.Stmt;
+import com.craftinginterpreters.lox.interpreter.Interpreter;
+import com.craftinginterpreters.lox.parser.Parser;
 import com.craftinginterpreters.lox.scanner.Scanner;
 import com.craftinginterpreters.lox.scanner.ScannerImpl;
 
@@ -79,7 +81,7 @@ public class Lox {
      * @param token
      * @param message
      */
-    static void error(Token token, String message) {
+    public static void error(Token token, String message) {
         if (token.type == TokenType.EOF) {
             report(token.line, " at end", message);
         } else {
@@ -98,7 +100,7 @@ public class Lox {
      * Throws error if error is detected when interpreting the script.
      * @param error
      */
-    static void runtimeError(RuntimeError error) {
+    public static void runtimeError(RuntimeError error) {
         System.err.println(error.getMessage() +
                 "\n[line " + error.token.line + "]");
         hadRuntimeError = true;

@@ -1,5 +1,6 @@
-package com.craftinginterpreters.lox;
+package com.craftinginterpreters.lox.interpreter;
 
+import com.craftinginterpreters.lox.Lox;
 import com.craftinginterpreters.lox.entities.Environment;
 import com.craftinginterpreters.lox.entities.Token;
 import com.craftinginterpreters.lox.enums.TokenType;
@@ -9,7 +10,7 @@ import com.craftinginterpreters.lox.generated.Stmt;
 
 import java.util.List;
 
-class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
+public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     private Environment environment = new Environment();
 
@@ -129,7 +130,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         throw new RuntimeError(operator, "Operands must be numbers.");
     }
 
-    void interpret(List<Stmt> statements) {
+    public void interpret(List<Stmt> statements) {
         try {
             for (Stmt statement : statements) {
                 execute(statement);
