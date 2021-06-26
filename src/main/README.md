@@ -6,10 +6,12 @@
 `make run-script path=path/to/script/file` Runs the script present in the path.
 
 ### Data Types:
+<pre>
 NUMBER - can be integer or floating
 STRING - sequence of characters
 BOOLEAN - true/false
 NULL - nil
+</pre>
 
 
 ### Language Syntax:
