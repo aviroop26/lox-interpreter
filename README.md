@@ -3,7 +3,7 @@
 
 `make run` Runs the interpreter interactively.
 
-`make run-script path=path/to/script/file` Runs the script present in the path.
+`make run-script path=path/to/script/file` Runs the script present in the path. Default path is ./script.lox.
 
 ### Data Types:
 <pre>
@@ -12,7 +12,6 @@ STRING - sequence of characters
 BOOLEAN - true/false
 NULL - nil
 </pre>
-
 
 ### Language Syntax:
 
