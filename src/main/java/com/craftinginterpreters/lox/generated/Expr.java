@@ -12,6 +12,7 @@ public abstract class Expr {
     R visitLogicalExpr(Logical expr);
     R visitUnaryExpr(Unary expr);
     R visitVariableExpr(Variable expr);
+    R visitCallExpr(Call expr);
   }
   public static class Assign extends Expr {
     public Assign(Token name, Expr value) {
@@ -108,6 +109,22 @@ public abstract class Expr {
     }
 
     public final Token name;
+  }
+  public static class Call extends Expr {
+    public Call(Expr callee, Token paren, List<Expr> arguments) {
+      this.callee = callee;
+      this.paren = paren;
+      this.arguments = arguments;
+    }
+
+    @Override
+    public <R> R accept(Visitor<R> visitor) {
+      return visitor.visitCallExpr(this);
+    }
+
+    public final Expr callee;
+    public final Token paren;
+    public final List<Expr> arguments;
   }
 
   public abstract <R> R accept(Visitor<R> visitor);

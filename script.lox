@@ -1,16 +1,8 @@
-print "Hello World!";
-print (1 + 2) < 4;
-
-var x = 2;
-print x * 3;
-print "";
-
-while(x < 10) {
-    print x;
-    x = x + 1;
+fun fib(n) {
+  if (n <= 1) return n;
+  return fib(n - 2) + fib(n - 1);
 }
 
-print "";
-
-for(var i = 0; i < 10; i = i + 1)
-    print i;
+for (var i = 0; i < 20; i = i + 1) {
+  print fib(i);
+}
